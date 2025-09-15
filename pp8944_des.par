@@ -1,0 +1,1902 @@
+
+Material="SiO2" {
+* Copyright (c) 1994-2016 Synopsys, Inc.
+* This parameter file and the associated documentation are proprietary
+* to Synopsys, Inc.  This parameter file may only be used in accordance
+* with the terms and conditions of a written license agreement with
+* Synopsys, Inc.  All other use, reproduction, or distribution of this
+* parameter file is strictly prohibited.
+
+
+Epsilon
+{ *  Ratio of the permittivities of material and vacuum
+
+  * epsilon() = epsilon
+	epsilon	= 3.9	# [1]
+}
+
+
+Epsilon_Inf
+{ *  Ratio of the high frequency limit of permittivities of material and vacuum
+
+  * epsilon_inf() = epsilon_inf
+	epsilon_inf	= 2.25	# [1]
+}
+
+
+Epsilon_aniso
+{ *  Ratio of the permittivities of material and vacuum
+
+  * epsilon() = epsilon
+	epsilon	= 3.9	# [1]
+}
+
+
+Epsilon_Inf_aniso
+{ *  Ratio of the high frequency limit of permittivities of material and vacuum
+
+  * epsilon_inf() = epsilon_inf
+	epsilon_inf	= 2.25	# [1]
+}
+
+
+RefractiveIndex
+{ *  Optical Refractive Index
+
+  * refractiveindex() = refractiveindex * (1 + alpha * (T-Tpar))
+	Tpar	= 3.0000e+02	# [K]
+	refractiveindex	= 1.46	# [1]
+	alpha	= 2.0000e-04	# [1/K]
+
+  * Gain dependence of refractive index in active region:
+  * a) Linear model: delta n = a0 * ( (n+p)/(2 * N0) - 1)
+  * b) Logarithmic model: delta n = a0 * log ( (n+p)/(2 * N0) )
+  * where n/p are the carrier densities in the active region. 
+	a0	= 0.0000e+00	# [1]
+	N0	= 1.0000e+18	# [1/cm^3]
+}
+
+
+ComplexRefractiveIndex
+{ *  Complex refractive index model: n_complex = n + i*k (unitless)
+  *  
+  *  with n = n_0 + delta_n_lambda + delta_n_T + delta_n_carr + delta_n_gain 
+  *       k = k_0 + delta_k_lambda             + delta_k_carr                
+  
+  * Base refractive index and extinction coefficient: 
+  *     n_0, k_0 
+  
+  * Wavelength dependence (real and imag): 
+  *     Formula 0: delta_n_lambda = Cn_lambda * lambda + Dn_lambda * lambda^2 
+  *                delta_k_lambda = Ck_lambda * lambda + Dk_lambda * lambda^2 
+  *     Formula 1: Read tabulated values 
+  *                NumericalTable (...)  
+  *     Formula 2: Read tabulated values from file 
+  *                NumericalTable = <string> 
+  
+  * Temperature dependence (real): 
+  *     delta_n_T = n_0 * ( Cn_temp * (T-Tpar)) 
+  
+  * Carrier dependence (real) 
+  *     delta_n_carr = - Cn_carr * (const.) * (n/m_e + p/m_h) 
+  
+  * Carrier dependence (imag) 
+  *     delta_k_carr = 1 / (4*PI) * (wavelength^Gamma_k_carr_e*Ck_carr_e*n + wavelength^Gamma_k_carr_h*Ck_carr_h*p) 
+  
+  * Gain dependence (real) 
+  *     lin: delta_n_gain = Cn_gain * ( (n+p)/(2 * Npar) - 1) 
+  *     log: delta_n_gain = Cn_gain * log ( (n+p)/(2 * Npar ) )
+	n_0	= 1.46	# [1]
+	k_0	= 0.0000e+00	# [1]
+	Cn_lambda	= 0.0000e+00	# [um^-1]
+	Dn_lambda	= 0.0000e+00	# [um^-2]
+	Ck_lambda	= 0.0000e+00	# [um^-1]
+	Dk_lambda	= 0.0000e+00	# [um^-2]
+	Cn_temp	= 2.0000e-04	# [K^-1]
+	Cn_carr	= 1	# [1]
+	Ck_carr	= 0.0000e+00 ,	0.0000e+00	# [cm^2]
+	Gamma_k_carr	= 1 ,	1	# [1]
+	Cn_gain	= 0.0000e+00	# [1]
+	Npar	= 1.0000e+18	# [cm^-3]
+        Formula = 1
+        TableInterpolation = PositiveSpline, PositiveSpline
+        NumericalTable ( 
+          0.051	0.804	0.322;
+          0.053	0.811	0.366;
+          0.055	0.822	0.408;
+          0.056	0.829	0.43;
+          0.058	0.843	0.47;
+          0.059	0.851	0.482;
+          0.0636	0.879	0.613;
+          0.0653	0.902	0.645;
+          0.067	0.927	0.677;
+          0.0689	0.957	0.712;
+          0.0699	0.975	0.731;
+          0.0709	0.999	0.75;
+          0.0719	1.03	0.763;
+          0.0729	1.072	0.768;
+          0.074	1.124	0.765;
+          0.0751	1.137	0.755;
+          0.0763	1.156	0.737;
+          0.0775	1.172	0.717;
+          0.0787	1.178	0.703;
+          0.08	1.172	0.696;
+          0.0813	1.167	0.699;
+          0.0827	1.168	0.711;
+          0.0841	1.175	0.739;
+          0.0855	1.195	0.771;
+          0.087	1.225	0.799;
+          0.0886	1.265	0.808;
+          0.0902	1.32	0.795;
+          0.0919	1.363	0.775;
+          0.0936	1.371	0.755;
+          0.0954	1.368	0.747;
+          0.0972	1.372	0.766;
+          0.0992	1.383	0.793;
+          0.1012	1.41	0.824;
+          0.1033	1.475	0.861;
+          0.1051	1.554	0.874;
+          0.1069	1.635	0.859;
+          0.1088	1.716	0.81;
+          0.1127	1.739	0.569;
+          0.1137	1.687	0.565;
+          0.1148	1.587	0.618;
+          0.1159	1.513	0.725;
+          0.117	1.492	0.914;
+          0.1181	1.567	1.11;
+          0.1187	1.645	1.136;
+          0.1192	1.772	1.13;
+          0.1198	1.919	1.045;
+          0.1204	2.048	0.925;
+          0.121	2.152	0.81;
+          0.1215	2.24	0.715;
+          0.1228	2.332	0.46;
+          0.124	2.33	0.323;
+          0.1252	2.292	0.236;
+          0.1265	2.243	0.168;
+          0.1278	2.19	0.119;
+          0.1291	2.14	0.077;
+          0.1319	2.047	0.043;
+          0.1333	2.006	0.0339;
+          0.1348	1.969	0.0271;
+          0.1362	1.935	0.0228;
+          0.1378	1.904	0.0189;
+          0.1393	1.876	0.0156;
+          0.1409	1.85	0.0132;
+          0.1425	1.825	0.0109;
+          0.1442	1.803	8.3800e-03;
+          0.1459	1.783	5.5700e-03;
+          0.1476	1.764	3.1700e-03;
+          0.1494	1.747	1.4000e-03;
+          0.1512	1.73	4.6300e-04;
+          0.1531	1.716	1.2200e-04;
+          0.155	1.702	3.2000e-05;
+          0.159	1.676	4.7000e-06;
+          0.1631	1.653	0.0000e+00;
+          0.1675	1.633	0.0000e+00;
+          0.1722	1.616	0.0000e+00;
+          0.1771	1.6	0.0000e+00;
+          0.1837	1.582	0.0000e+00;
+          0.1907	1.567	0.0000e+00;
+          0.1984	1.554	0.0000e+00;
+          0.2066	1.543	0.0000e+00;
+          0.2144	1.53371	0.0000e+00;
+          0.2267	1.52276	0.0000e+00;
+          0.2302	1.52009	0.0000e+00;
+          0.2378	1.51474	0.0000e+00;
+          0.2399	1.51338	0.0000e+00;
+          0.2483	1.50841	0.0000e+00;
+          0.2652	1.50004	0.0000e+00;
+          0.2699	1.49805	0.0000e+00;
+          0.2753	1.49592	0.0000e+00;
+          0.2803	1.49404	0.0000e+00;
+          0.2894	1.49099	0.0000e+00;
+          0.2967	1.48873	0.0000e+00;
+          0.30215	1.48719	0.0000e+00;
+          0.3303	1.48053	0.0000e+00;
+          0.33415	1.47976	0.0000e+00;
+          0.3404	1.47858	0.0000e+00;
+          0.3466	1.47746	0.0000e+00;
+          0.36105	1.47512	0.0000e+00;
+          0.365	1.47453	0.0000e+00;
+          0.40465	1.46961	0.0000e+00;
+          0.4358	1.46669	0.0000e+00;
+          0.4678	1.46429	0.0000e+00;
+          0.4861	1.46313	0.0000e+00;
+          0.5086	1.46197	0.0000e+00;
+          0.5461	1.46008	0.0000e+00;
+          0.577	1.45885	0.0000e+00;
+          0.5791	1.45877	0.0000e+00;
+          0.5876	1.45847	0.0000e+00;
+          0.5893	1.45841	0.0000e+00;
+          0.64385	1.45671	0.0000e+00;
+          0.6563	1.45637	0.0000e+00;
+          0.6678	1.45608	0.0000e+00;
+          0.7065	1.45515	0.0000e+00;
+          0.8521	1.45248	0.0000e+00;
+          0.89435	1.45185	0.0000e+00;
+          1.014	1.45025	0.0000e+00;
+          1.0829	1.44941	0.0000e+00;
+          1.1287	1.44888	0.0000e+00;
+          1.3622	1.44621	0.0000e+00;
+          1.3951	1.44584	0.0000e+00;
+          1.4695	1.44497	0.0000e+00;
+          1.5295	1.44427	0.0000e+00;
+          1.6606	1.44267	0.0000e+00;
+          1.681	1.44241	0.0000e+00;
+          1.6932	1.44226	0.0000e+00;
+          1.7091	1.44205	0.0000e+00;
+          1.8131	1.44069	0.0000e+00;
+          1.9701	1.43851	0.0000e+00;
+          2.0581	1.43722	0.0000e+00;
+          2.1526	1.43576	0.0000e+00;
+          2.3254	1.43292	0.0000e+00;
+          2.4374	1.43095	0.0000e+00;
+          3.2439	1.41314	0.0000e+00;
+          3.2668	1.41253	0.0000e+00;
+          3.3026	1.41155	0.0000e+00;
+          3.422	1.40819	0.0000e+00;
+          3.507	1.40568	0.0000e+00;
+          3.5564	1.40418	0.0000e+00;
+          10	1.4	0.0000e+00;
+          10.001	1.4	0.0000e+00;
+          10.002	1.4	0.0000e+00;
+        ) 
+	Tpar	= 3.0000e+02	# [K]
+} 
+
+
+* SpectralConversion
+* { * Spectral Conversion Model
+*   No default model, user has to define.
+*   All wavelength parameters should be in nanometers.
+*   Choice of Analytic or NumericalTable selected in Physics section of region
+*  
+*   ConversionEfficiency = float     * ratio of absorbed photons that are reemitted.
+*   AbsorptionScaling = float        * scale absorption
+*   EmissionScaling = float          * scale emission
+*   Analytic (
+*     AbsorptionProfile = (
+*        Gaussian(lambda0 sigma peakvalue dc_offset lambda_range0 lambda_range1)
+*        Lorentzian(lambda0 width peakvalue dc_offset lambda_range0 lambda_range1)
+*        ...
+*     )
+*     EmissionProfile = (
+*        Gaussian(lambda0 sigma peakvalue dc_offset lambda_range0 lambda_range1)
+*        Lorentzian(lambda0 width peakvalue dc_offset lambda_range0 lambda_range1)
+*        ...
+*     )
+*   )
+*   NumericalTable (
+*     AbsorptionProfile = (
+*        lambda0 value0
+*        lambda1 value1
+*        ...
+*     )
+*     EmissionProfile = (
+*        lambda0 value0
+*        lambda1 value1
+*        ...
+*     )
+
+*   ConversionEfficiency = 1.0
+* }
+
+
+LatticeHeatCapacity
+{ *  lumped electron-hole-lattice heat capacity
+
+  * cv() = cv + cv_b * T + cv_c * T^2 + cv_d * T^3 
+	cv	= 1.67	# [J/(K cm^3)]
+	cv_b	= 0.0000e+00	# [J/(K^2 cm^3)]
+	cv_c	= 0.0000e+00	# [J/(K^3 cm^3)]
+	cv_d	= 0.0000e+00	# [J/(K^4 cm^3)]
+}
+
+
+Kappa
+{ *  Lattice thermal conductivity
+
+  * Formula = 0:
+  * kappa() = 1 / ( 1/kappa + 1/kappa_b * T + 1/kappa_c * T^2 )
+
+  * Formula = 1:
+  * kappa() = kappa + kappa_b * T + kappa_c * T^2 
+
+  Formula = 1
+	kappa	= 0.014	# [W/(K cm)]
+	kappa_b	= 0.0000e+00	# [W/(K^2 cm)]
+	kappa_c	= 0.0000e+00	# [W/(K^3 cm)]
+
+}
+
+
+Kappa_aniso
+{ *  Lattice thermal conductivity
+
+  * Formula = 0:
+  * kappa() = 1 / ( 1/kappa + 1/kappa_b * T + 1/kappa_c * T^2 )
+
+  * Formula = 1:
+  * kappa() = kappa + kappa_b * T + kappa_c * T^2 
+
+  Formula = 1
+	kappa	= 0.014	# [W/(K cm)]
+	kappa_b	= 0.0000e+00	# [W/(K^2 cm)]
+	kappa_c	= 0.0000e+00	# [W/(K^3 cm)]
+
+}
+
+Bandgap
+{ * Eg = Eg0 + alpha Tpar^2 / (beta + Tpar) - alpha T^2 / (beta + T)
+  * Parameter 'Tpar' specifies the value of lattice 
+  * temperature, at which parameters below are defined
+  * Chi0 is electron affinity.
+	Chi0	= 0.9	# [eV]
+	Eg0	= 9	# [eV]
+	alpha	= 0.0000e+00	# [eV K^-1]
+	beta	= 0.0000e+00	# [K]
+	alpha2	= 0.0000e+00	# [eV K^-1]
+	beta2	= 0.0000e+00	# [K]
+	EgMin	= -1.0000e+01	# [eV]
+	dEgMin	= 0.0000e+00	# [eV]
+	Tpar	= 0.0000e+00	# [K]
+}
+
+FreeCarrierAbsorption
+{
+  * Coefficients for free carrier absorption:
+  * fcaalpha_n for electrons,
+  * fcaalpha_p for holes
+
+  * FCA = (alpha_n * n + alpha_p * p) * Light Intensity
+	fcaalpha_n	= 4.0000e-18	# [cm^2]
+	fcaalpha_p	= 8.0000e-18	# [cm^2]
+}
+
+QWStrain
+{
+  * Zincblende crystals:
+  *   Parameters: a_nu, a_c, b, C_12, C_11
+  *   StrainConstant eps (formula = 1) or lattice constant
+  *   a0 (formula = 2) for energy shift of quantum-well
+  *   subbands.
+  *   a0(T) = a0 + alpha (T-Tpar)
+
+  * Wurtzite crystals:
+  *   Parameters: a_c, D1, D2, D3, D4, C_13, C_33
+  *   Lattice constants a0 and c0 (formula 2 must be used)
+  *   a0(T) = a0 + alpha (T-Tpar)
+  *   c0(T) = c0 + alpha (T-Tpar)
+
+	  * Default formula	= 1	# [1]
+	eps	= 0.0000e+00	# [1]
+	a0	= 3.1890e-10	# [cm]
+	alpha	= 0.0000e+00	# [cm/K]
+	Tpar	= 3.0000e+02	# [K]
+	a_nu	= 0.0000e+00	# [eV]
+	a_c	= -4.0800e+00	# [eV]
+	b_shear	= 0.0000e+00	# [eV]
+	c_11	= 0.0000e+00	# [1e-2 GPa]
+	c_12	= 0.0000e+00	# [1e-2 GPa]
+	d1	= -8.9000e-01	# [eV]
+	d2	= 4.27	# [eV]
+	d3	= 5.18	# [eV]
+	d4	= -2.5900e+00	# [eV]
+	c_13	= 1	# [1e-2 GPa]
+	c_33	= 3.92	# [1e-2 GPa]
+	c0	= 5.1850e-10	# [cm]
+}
+
+eDOSMass
+{
+  * For effective mass specification Formula1 (me approximation):
+  * or Formula2 (Nc300) can be used :
+	Formula	= 1	# [1]
+  * Formula1:
+  * me/m0 = [ (6 * mt)^2 *  ml ]^(1/3) + mm
+  * mt = a[Eg(0)/Eg(T)] 
+  * Nc(T) = 2(2pi*kB/h_Planck^2*me*T)^3/2 = 2.5094e19 ((me/m0)*(T/300))^3/2 
+	a	= 0.0000e+00	# [1]
+	ml	= 0.0000e+00	# [1]
+	mm	= 0.42	# [1]
+}
+
+hDOSMass
+{
+  * For effective mass specification Formula1 (mh approximation):
+  * or Formula2 (Nv300) can be used :
+	Formula	= 1	# [1]
+  * Formula1:
+  * mh =  m0*{[(a+bT+cT^2+dT^3+eT^4)/(1+fT+gT^2+hT^3+iT^4)]^(2/3) + mm}
+  * Nv(T) = 2(2pi*kB/h_Planck^2*mh*T)^3/2 = 2.5094e19 ((mh/m0)*(T/300))^3/2 
+	a	= 0	# [1]
+	b	= 0	# [K^-1]
+	c	= 0	# [K^-2]
+	d	= 0	# [K^-3]
+	e	= 0	# [K^-4]
+	f	= 0	# [K^-1]
+	g	= 0	# [K^-2]
+	h	= 0	# [K^-3]
+	i	= 0	# [K^-4]
+	mm	= 1	# [1]
+}
+
+SchroedingerParameters:
+{ * For the hole masses for Schroedinger equation you can
+  * use different formulas.
+  * 0: use the isotropic density of states effective mass
+  * 1: (for materials with Si-like hole band structure)
+  *    m(k)/m0=1/(A+-sqrt(B+C*((xy)^2+(yz)^2+(zx)^2)))
+  *    where k=(x,y,z) is unit normal vector in reziprocal
+  *    space.  '+' for light hole band, '-' for heavy hole band
+  * 2: Heavy hole mass mh and light hole mass ml are
+  *    specified explicitly.
+  *    Use me as electron mass for free-carrier effect in 
+  *    the refractive index model.
+  * For electron masses, the following formula options exist:
+  * 0: use the isotropic density of states effective mass
+  * 1: (for materials with Si-like hole band structure)
+  *    use the a, ml, and mm parameters from eDOSMass.
+  *    Typically, this leads to anisotropy.
+	formula	= 0 ,	2	# [1]
+  * Formula(hole) 2 parameters:
+	ml	= 0.629961	# [1]
+	mh	= 0.629961	# [1]
+	me	= 0.0000e+00	# [1]
+  * Lifting of degeneracy of bulk valleys. The value for
+  * electrons is added to the band edge for the subband
+  * ladder of lower degeneracy if positive, and subtracted
+  * from the band edge for the ladder of higher degeneracy
+  * if negative. (that is, the value of the band edge is
+  * always increased).  For holes, the value is subtracted from
+  * the band edge for the heavy hole band is positive,
+  * add added tp that of the light hole band if
+  * negative.  The signs are such that the shift always
+  * moves the band edges 'outward', away from midgap.  The
+  * gap itself is defined as the separation of the
+  * unshifted band edges and remains unaffected.
+	offset	= 0.0000e+00 ,	0.0000e+00	# [eV]
+  * Alternative to the specification of formula, offset,
+  * and masses, you can make an arbitrary number of ladder
+  * specification, 'eLadder(mz, mxy, deg, dE) and hLadder(...)
+  * Here, mz is the quantization mass, mxy an in-plane DOS mass,
+  * deg the ladder degeneracy, and dE an shift of the band edge
+  * for the ladder (non-negative; the shift is always outward,
+  * away from midgap).  When present, we solve the Schroedinger
+  * equation separately for each ladder
+
+  * Temperatures in rescaling of the mxy for eLadder and hLadder
+	ShiftTemperature	= 1.0000e+10 ,	1.0000e+10	# [K]
+}
+
+QuantumPotentialParameters
+{ * gamma:  weighting factor for quantum potential
+  * theta:  weight for quadratic term
+  * xi:     weight for quasi Fermi potential
+  * eta:    weight for electrostatic potential
+  * nu :    weight for DOS mass change from stress
+	gamma	= 1 ,	1	# [1]
+	theta	= 0.5 ,	0.5	# [1]
+	xi	= 0.0000e+00 ,	0.0000e+00	# [1]
+	eta	= 0.0000e+00 ,	0.0000e+00	# [1]
+	nu	= 0.0000e+00 ,	0.0000e+00	# [1]
+}
+
+    HydrogenDiffusion
+      {
+        HydrogenAtom
+          {
+            charge = 0 # [1]
+            hydrogen = 1 # [1]
+            atd = 1 # [1]
+            d0 = 9.5600e-04 # [cm^2/s]
+            Ed = 0.2000e+00 # [eV]
+            n0 = 1.0000e+00 # [/cm^3]
+            krec = 0.0000e+00 # [s^-1 or cm*s^-1]
+          }
+
+        HydrogenIon
+          {
+            charge = 1 # [1]
+            hydrogen = 1 # [1]
+            d0 = 3.8000e-13 # [cm^2/s]
+            Ed = 0.0000e+00 # [eV]
+            atd = 1 # [1]
+            n0 = 0.0000e+00 # [/cm^3]
+            krec = 0.0000e+00 # [s^-1 or cm*s^-1]
+          }
+
+        HydrogenMolecule
+          {
+            charge  = 0 # [1]
+            hydrogen = 2 # [1]
+            atd = 1 # [1]
+            d0 = 3.5000e-11 # [cm^2/s]
+            Ed = 0.5000e+00 # [eV]
+            n0 = 1.0000e+00 # [/cm^3]
+            krec = 0.0000e+00 # [s^-1 or cm*s^-1]
+          }
+      }
+
+  KMCHydrogenParameters {
+
+    HydrogenAtom {
+      d0         = 3.8000e-13	 # [cm^2/s]
+      Ed         = 0.0000e+00	 # [eV]
+      gamma      = 0.0000e+00	 # [1]
+      rate0      = 0.0000e+00	 # [s^-1]
+      Erate      = 0.0000e+00	 # [eV]
+      gamma_rate = 0.0000e+00	 # [1]
+      seg0       = 0.0000e+00	 # [1]
+      Eseg       = 0.0000e+00	 # [eV]
+      gamma_seg  = 0.0000e+00	 # [1]
+    }
+
+    HydrogenIon {
+      d0         = 3.8000e-13	 # [cm^2/s]
+      Ed         = 0.0000e+00	 # [eV]
+      gamma      = 0.0000e+00	 # [1]
+      rate0      = 0.0000e+00	 # [s^-1]
+      Erate      = 0.0000e+00	 # [eV]
+      gamma_rate = 0.0000e+00	 # [1]
+      seg0       = 0.0000e+00	 # [1]
+      Eseg       = 0.0000e+00	 # [eV]
+      gamma_seg  = 0.0000e+00	 # [1]
+    }
+
+    HydrogenMolecule {
+      d0         = 1.8000e-14	 # [cm^2/s]
+      Ed         = 0.0000e+00	 # [eV]
+      gamma      = 0.0000e+00	 # [1]
+      rate0      = 0.0000e+00	 # [s^-1]
+      Erate      = 0.0000e+00	 # [eV]
+      gamma_rate = 0.0000e+00	 # [1]
+      seg0       = 0.0000e+00	 # [1]
+      Eseg       = 0.0000e+00	 # [eV]
+      gamma_seg  = 0.0000e+00	 # [1]
+    }
+  }
+
+RadiativeRecombination * coefficients:
+{ * R_Radiative = C * (T/Tpar)^alpha * (n p - ni_eff^2)
+  * C    
+  * alpha 
+	C	= 0.0000e+00	# [cm^3/s]
+	alpha	= 0.0000e+00	# []
+}
+
+Radiation
+{ * G = g * D * ((E+E0)/(E+E1))^m  -  the generation term, 
+  *  where E is the electric field, 
+  *        E0, E1, m are constants to account the recombination, 
+  *        g is the electron-hole creation rate , 
+  *        D is the dose rate defined in the input file. 
+	g	= 7.6000e+12	# [1/(rad*cm^3)]
+	E0	= 0.1	# [V/cm]
+	E1	= 1.3500e+06	# [V/cm]
+	m	= 0.9	# [1]
+}
+
+Resistivity
+{ * Resist(T) = Resist0 * ( 1 + TempCoef * ( T - 273 ) )
+	Resist0	= 3.0000e+09	# [ohm*cm]
+	TempCoef	= 4.5000e-03	# [1/K]
+}
+
+}
+
+************************************
+
+Material = "Silver"{Insert = "Silver.par"}
+
+************************************
+
+Material = "Aluminum"{Insert = "Aluminum.par"}
+
+************************************
+Material = "BCP"{
+
+
+ConstantMobility:
+{
+ * mu_const = mumax (T/T0)^(-Exponent)
+	mumax	= 4e-2 ,	4e-6	# [cm^2/(Vs)]
+	Exponent	= 1.5 ,	1.5	# [1]
+}
+
+
+eDOSMass
+{
+Formula = 2
+* me/m0 = (Nc300/2.540e19)^2/3
+* Nc(T) = Nc300 * (T/300)^3/2
+   Nc300 = 1e+18  # [cm-3]
+
+}
+
+hDOSMass
+{
+Formula = 2
+* mh/m0 = (Nv300/2.540e19)^2/3
+* Nv(T) = Nv300 * (T/300)^3/2
+    Nv300 = 1e+18  # [cm-3]
+
+} 
+
+
+Epsilon{
+  epsilon = 3.5
+}
+
+RadiativeRecombination {
+  C = +9.0000000e-12
+}
+
+Auger * coefficients:
+{ * R_Auger = ( C_n n + C_p p ) ( n p - ni_eff^2)
+  * with C_n,p = (A + B (T/T0) + C (T/T0)^2) (1 + H exp(-{n,p}/N0))
+	A	= 4.4e-29 ,	4.4e-29	# [cm^6/s]
+	B	= 0 ,	0	# [cm^6/s]
+	C	= 0 ,	0	# [cm^6/s]
+	H	= 0 ,	0	# [1]
+	N0	= 1.0000e+18 ,	1.0000e+18	# [cm^(-3)]
+}
+
+SurfaceRecombination * surface SRH recombination:
+{ * s = S0 ( 1 + Sref ( N/Nref )^gamma ) recombination velocity
+	S0	= 1.0000e+03 ,	1.0000e+03	# [cm/s]
+	Sref	= 0	# [1 Nref	= 1.0000e+16	# [cm^(-3)]
+	gamma	= 1	# [1]
+	Etrap	= 0.0000e+00	# [eV]
+}
+
+Bandgap
+{ * Eg = Eg0 + dEg0 + alpha Tpar^2 / (beta + Tpar) - alpha T^2 / (beta + T)
+  * dEg0(<bgn_model_name>) is a band gap correction term.  It is used together with 
+  * an appropriate BGN model, if this BGN model is chosen in Physics section 
+  * Parameter 'Tpar' specifies the value of lattice 
+  * temperature, at which parameters below are defined
+  * Chi0 is electron affinity.
+	Chi0	= 2.7 # [eV], [58BRA] 
+	Bgn2Chi	= 0.5	# [1] 
+	Eg0	= 3.5	# [eV], [58BRA] - 1.16964 at 0 degC
+	dEg0(Bennett)	= 0.0000e+00	# [eV] 
+	dEg0(Slotboom)	= 0.0000e+00	# [eV] 
+	dEg0(OldSlotboom)	= 0.0000e+00	# [eV] 
+	dEg0(delAlamo)	= 0.0000e+00	# [eV] 
+	alpha	= 0.0000e+00	# [eV K^-1] 
+	beta	= 0.0000e+00	# [K] 
+	Tpar	= 300	# [K] 
+}
+
+Kappa
+{ *  Lattice thermal conductivity
+  Formula = 1
+	* parameter kappa:
+	Xmax(0)		= 0.0		# [1]
+	Xmax(1)		= 0.1		# [1]
+	Xmax(2)		= 0.5		# [1]
+	Xmax(3)		= 0.85		# [1]
+	Xmax(4)		= 1.0		# [1]
+	kappa(0)	=  0.55		# [W/(K cm)]
+	kappa(1)	=  0.21		# [W/(K cm)]
+	kappa(2)	=  0.09		# [W/(K cm)]
+	kappa(3)	=  0.14		# [W/(K cm)]
+	kappa(4)	=  0.91		# [W/(K cm)]
+	B(kappa(1))	= 0.0
+	B(kappa(2))	= 0.0
+	B(kappa(3))	= 0.0
+	B(kappa(4))	= 0.0
+	C(kappa(1))	= 0.0
+	C(kappa(2))	= 0.0
+	C(kappa(3))	= 0.0
+	C(kappa(4))	= 0.0
+	* parameter kappa_b:
+	kappa_b(0)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(1)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(2)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(3)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(4)	= 0.0		# [W/(K^2 cm)]
+	* parameter kappa_c:
+	kappa_c(0)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(1)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(2)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(3)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(4)	= 0.0		# [W/(K^2 cm)]
+}
+
+
+ComplexRefractiveIndex {
+  Formula = 2
+  NumericalTable = "/jumbo/scheidelerlab/Vann/CRIs/PCBM_complex_refractive_index.txt"
+    
+}
+
+Scharfetter * relation and trap level for SRH recombination:
+{ * tau = taumin + ( taumax - taumin ) / ( 1 + ( N/Nref )^gamma)
+  * tau(T) = tau * ( (T/300)^Talpha )          (TempDep)
+  * tau(T) = tau * exp( Tcoeff * ((T/300)-1) ) (ExpTempDep)
+	taumin	= 1e-8 ,	1e-6	# [s]
+	taumax	= 1e-5 , 	1e-6  # [s]
+	Nref	= 1.0000e+18 ,	1.0000e+16	# [cm^(-3)]
+	gamma	= 1 ,	1	# [1]
+	Talpha	= 0.0000e+00 ,	0.0000e+00	# [1]
+	Tcoeff	= 0.0000e+00 ,	0.0000e+00	# [1]
+	Etrap	= 0.0000e+00	# [eV]
+}
+
+SchroedingerParameters:
+{ 
+  * For the hole masses for Schroedinger equation you can
+  * use different formulas.
+  * formula=1 (for materials with Si-like hole band structure)
+  *   m(k)/m0=1/(A+-sqrt(B+C*((xy)^2+(yz)^2+(zx)^2)))
+  *   where k=(x,y,z) is unit normal vector in reziprocal
+  *   space.  '+' for light hole band, '-' for heavy hole band
+  * formula=2: Heavy hole mass mh and light hole mass ml are
+  *   specified explicitly.
+  * formula=3: A is the relative effective mass.  This
+  *   formula must only be used for metal and will used in
+  *   tunnelling current computation only.
+  * formula<0 means no default model and no default parameters
+  *   are available, so you have to provide values for
+  *   'formula' and the respective parameters in order to use
+  *   this parameter set.
+        formula = 2      # [1]
+  * Formula 2 parameters:
+	ml(0)	= 0.082	# [1]
+	ml(1)	= 0.150	# [1]
+	mh(0)	= 0.51	# [1]
+	mh(1)	= 0.76	# [1]
+}
+}
+
+************************************
+
+
+Material = "PCBM"{
+
+
+ConstantMobility:
+{
+ * mu_const = mumax (T/T0)^(-Exponent)
+	mumax	= 4e-3 ,	4e-5	# [cm^2/(Vs)]
+	Exponent	= 1.5 ,	1.5	# [1]
+}
+
+
+eDOSMass
+{
+Formula = 2
+* me/m0 = (Nc300/2.540e19)^2/3
+* Nc(T) = Nc300 * (T/300)^3/2
+   Nc300 = 1e+19  # [cm-3]
+
+}
+
+hDOSMass
+{
+Formula = 2
+* mh/m0 = (Nv300/2.540e19)^2/3
+* Nv(T) = Nv300 * (T/300)^3/2
+    Nv300 = 1e+19  # [cm-3]
+
+} 
+
+
+Epsilon{
+  epsilon = 3.5
+}
+
+RadiativeRecombination {
+  C = +9.0000000e-12
+}
+
+Auger * coefficients:
+{ * R_Auger = ( C_n n + C_p p ) ( n p - ni_eff^2)
+  * with C_n,p = (A + B (T/T0) + C (T/T0)^2) (1 + H exp(-{n,p}/N0))
+	A	= 4.4e-29 ,	4.4e-29	# [cm^6/s]
+	B	= 0 ,	0	# [cm^6/s]
+	C	= 0 ,	0	# [cm^6/s]
+	H	= 0 ,	0	# [1]
+	N0	= 1.0000e+18 ,	1.0000e+18	# [cm^(-3)]
+}
+
+SurfaceRecombination * surface SRH recombination:
+{ * s = S0 ( 1 + Sref ( N/Nref )^gamma ) recombination velocity
+	S0	= 1.0000e+03 ,	1.0000e+03	# [cm/s]
+	Sref	= 0	# [1 Nref	= 1.0000e+16	# [cm^(-3)]
+	gamma	= 1	# [1]
+	Etrap	= 0.0000e+00	# [eV]
+}
+
+Bandgap
+{ * Eg = Eg0 + dEg0 + alpha Tpar^2 / (beta + Tpar) - alpha T^2 / (beta + T)
+  * dEg0(<bgn_model_name>) is a band gap correction term.  It is used together with 
+  * an appropriate BGN model, if this BGN model is chosen in Physics section 
+  * Parameter 'Tpar' specifies the value of lattice 
+  * temperature, at which parameters below are defined
+  * Chi0 is electron affinity.
+	Chi0	= 4.2 # [eV], [58BRA] 
+	Bgn2Chi	= 0.5	# [1] 
+	Eg0	= 1.9	# [eV], [58BRA] - 1.16964 at 0 degC
+	dEg0(Bennett)	= 0.0000e+00	# [eV] 
+	dEg0(Slotboom)	= 0.0000e+00	# [eV] 
+	dEg0(OldSlotboom)	= 0.0000e+00	# [eV] 
+	dEg0(delAlamo)	= 0.0000e+00	# [eV] 
+	alpha	= 0.0000e+00	# [eV K^-1] 
+	beta	= 0.0000e+00	# [K] 
+	Tpar	= 300	# [K] 
+}
+
+Kappa
+{ *  Lattice thermal conductivity
+  Formula = 1
+	* parameter kappa:
+	Xmax(0)		= 0.0		# [1]
+	Xmax(1)		= 0.1		# [1]
+	Xmax(2)		= 0.5		# [1]
+	Xmax(3)		= 0.85		# [1]
+	Xmax(4)		= 1.0		# [1]
+	kappa(0)	=  0.55		# [W/(K cm)]
+	kappa(1)	=  0.21		# [W/(K cm)]
+	kappa(2)	=  0.09		# [W/(K cm)]
+	kappa(3)	=  0.14		# [W/(K cm)]
+	kappa(4)	=  0.91		# [W/(K cm)]
+	B(kappa(1))	= 0.0
+	B(kappa(2))	= 0.0
+	B(kappa(3))	= 0.0
+	B(kappa(4))	= 0.0
+	C(kappa(1))	= 0.0
+	C(kappa(2))	= 0.0
+	C(kappa(3))	= 0.0
+	C(kappa(4))	= 0.0
+	* parameter kappa_b:
+	kappa_b(0)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(1)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(2)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(3)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(4)	= 0.0		# [W/(K^2 cm)]
+	* parameter kappa_c:
+	kappa_c(0)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(1)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(2)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(3)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(4)	= 0.0		# [W/(K^2 cm)]
+}
+
+
+ComplexRefractiveIndex {
+  Formula = 2
+  NumericalTable = "/jumbo/scheidelerlab/Vann/CRIs/PCBM_complex_refractive_index.txt"
+    
+}
+
+Scharfetter * relation and trap level for SRH recombination:
+{ * tau = taumin + ( taumax - taumin ) / ( 1 + ( N/Nref )^gamma)
+  * tau(T) = tau * ( (T/300)^Talpha )          (TempDep)
+  * tau(T) = tau * exp( Tcoeff * ((T/300)-1) ) (ExpTempDep)
+	taumin	= 1e-6 ,	1e-6	# [s]
+	taumax	= 1e-6 , 	1e-6  # [s]
+	Nref	= 1.0000e+19 ,	1.0000e+16	# [cm^(-3)]
+	gamma	= 1 ,	1	# [1]
+	Talpha	= 0.0000e+00 ,	0.0000e+00	# [1]
+	Tcoeff	= 0.0000e+00 ,	0.0000e+00	# [1]
+	Etrap	= 0.0000e+00	# [eV]
+}
+
+SchroedingerParameters:
+{ 
+  * For the hole masses for Schroedinger equation you can
+  * use different formulas.
+  * formula=1 (for materials with Si-like hole band structure)
+  *   m(k)/m0=1/(A+-sqrt(B+C*((xy)^2+(yz)^2+(zx)^2)))
+  *   where k=(x,y,z) is unit normal vector in reziprocal
+  *   space.  '+' for light hole band, '-' for heavy hole band
+  * formula=2: Heavy hole mass mh and light hole mass ml are
+  *   specified explicitly.
+  * formula=3: A is the relative effective mass.  This
+  *   formula must only be used for metal and will used in
+  *   tunnelling current computation only.
+  * formula<0 means no default model and no default parameters
+  *   are available, so you have to provide values for
+  *   'formula' and the respective parameters in order to use
+  *   this parameter set.
+        formula = 2      # [1]
+  * Formula 2 parameters:
+	ml(0)	= 0.082	# [1]
+	ml(1)	= 0.150	# [1]
+	mh(0)	= 0.51	# [1]
+	mh(1)	= 0.76	# [1]
+}
+}
+
+***********************************
+
+Material = "Perovskite"{
+
+
+eDOSMass
+{
+Formula = 2
+* me/m0 = (Nc300/2.540e19)^2/3
+* Nc(T) = Nc300 * (T/300)^3/2
+   Nc300 = 2.21e+18  # [cm-3] SWITCH BACK
+ *   Nc300	= 4.3519e+17	# [cm-3]
+}
+
+hDOSMass
+{
+Formula = 2
+* mh/m0 = (Nv300/2.540e19)^2/3
+* Nv(T) = Nv300 * (T/300)^3/2
+    Nv300 = 2.21e+18  # [cm-3] SWITCH BACK
+  * 	Nv300	= 1.2464e+19	# [cm-3] #
+} 
+
+Epsilon{
+  epsilon = 24
+}
+
+Bandgap
+{ * Eg = Eg0 + dEg0 + alpha Tpar^2 / (beta + Tpar) - alpha T^2 / (beta + T)
+  * dEg0(<bgn_model_name>) is a band gap correction term.  It is used together with 
+  * an appropriate BGN model, if this BGN model is chosen in Physics section 
+  * Parameter 'Tpar' specifies the value of lattice 
+  * temperature, at which parameters below are defined
+  * Chi0 is electron affinity.
+	Chi0	= 4.2 # [eV], [58BRA] 
+	Bgn2Chi	= 0.5	# [1] 
+	Eg0	= 1.55	# [eV], [58BRA] - 1.16964 at 0 degC
+	dEg0(Bennett)	= 0.0000e+00	# [eV] 
+	dEg0(Slotboom)	= 0.0000e+00	# [eV] 
+	dEg0(OldSlotboom)	= 0.0000e+00	# [eV] 
+	dEg0(delAlamo)	= 0.0000e+00	# [eV] 
+	alpha	= 0.0000e+00	# [eV K^-1] 
+	beta	= 0.0000e+0	
+	Tpar	= 300	# [K] 
+
+
+*	Eg0	= 1.519   # [eV]
+*	alpha = 5.405e-04 # [eV/K]
+*	beta = 204.0 # [K] 
+*	Bgn2Chi	= 0.5	# [1] 
+*	Tpar = 0 # [K]
+}
+
+ComplexRefractiveIndex {
+  Formula = 2
+  TableInterpolation = Spline
+  NumericalTable = "/jumbo/scheidelerlab/Vann/CRIs/PVSK_complex_refractive_index_1.txt"
+ 
+}
+
+ConstantMobility:
+{ * mu_const = mumax (T/T0)^(-Exponent)
+*mumax	    = 9.4000e+03 ,	491.5	# [cm^2/(Vs)]
+*Exponent	= 2.1  ,  2.2   # [1]
+	mumax	= 30 ,	30	# [cm^2/(Vs)]
+	Exponent	= 1.5 ,	1.5	# [1]
+}
+
+
+RadiativeRecombination {
+  C = +6.0000000e-12
+}
+
+
+
+SurfaceRecombination * surface SRH recombination:
+{ * s = S0 ( 1 + Sref ( N/Nref )^gamma ) recombination velocity
+	S0	= 3.4000e+6 ,	3.4000e+6	# [cm/s]
+	Sref	= 0	# [1 Nref	= 1.0000e+16	# [cm^(-3)]
+	gamma	= 1	# [1]
+	Etrap	= 0.0000e+00	# [eV]
+}
+
+
+Auger * coefficients:
+{ * R_Auger = ( C_n n + C_p p ) ( n p - ni_eff^2)
+  * with C_n,p = (A + B (T/T0) + C (T/T0)^2) (1 + H exp(-{n,p}/N0))
+	A	= 4.4e-29 ,	4.4e-29	# [cm^6/s]
+	B	= 0 ,	0	# [cm^6/s]
+	C	= 0 ,	0	# [cm^6/s]
+	H	= 0 ,	0	# [1]
+	N0	= 1.0000e+18 ,	1.0000e+18	# [cm^(-3)]
+}
+
+Kappa
+{ *  Lattice thermal conductivity
+
+  * Formula = 1:
+  * kappa() = kappa + kappa_b * T + kappa_c * T^2
+  *     kappa   = 0.46  # [W/(K cm)]
+
+        kappa	= 0.45	# [W/(K cm)]
+
+        kappa_b = 0.0000e+00    # [W/(K^2 cm)]
+        kappa_c = 0.0000e+00    # [W/(K^3 cm)]
+}
+
+Scharfetter * relation and trap level for SRH recombination:
+{ * tau = taumin + ( taumax - taumin ) / ( 1 + ( N/Nref )^gamma)
+  * tau(T) = tau * ( (T/300)^Talpha )          (TempDep)
+  * tau(T) = tau * exp( Tcoeff * ((T/300)-1) ) (ExpTempDep)
+	taumin	= 1.0000e-6 ,	1.0000e-6 # [s]
+  *	taumax	= 1.0000e-10 ,	1.0000e-10	# [s]
+	taumax	= 1e-6 ,	1e-6	# [s]
+	Nref	= 1.0000e+16 ,	1.0000e+16	# [cm^(-3)]
+	gamma	= 1 ,	1	# [1]
+	Talpha	= 0.0000e+00 ,	0.0000e+00	# [1]
+	Tcoeff	= 0.0000e+00 ,	0.0000e+00	# [1]
+	Etrap	= 0.0000e+00	# [eV]
+}
+
+SchroedingerParameters:
+{ * For the hole masses for Schroedinger equation you can
+  * use different formulas.
+  * 0: use the isotropic density of states effective mass
+  * 1: (for materials with Si-like hole band structure)
+  *    m(k)/m0=1/(A+-sqrt(B+C*((xy)^2+(yz)^2+(zx)^2)))
+  *    where k=(x,y,z) is unit normal vector in reziprocal
+  *    space.  '+' for light hole band, '-' for heavy hole band
+  * 2: Heavy hole mass mh and light hole mass ml are
+  *    specified explicitly.
+  *    Use me as electron mass for free-carrier effect in
+  *    the refractive index model.
+  * For electron masses, the following formula options exist:
+  * 0: use the isotropic density of states effective mass
+  * 1: (for materials with Si-like hole band structure)
+  *    use the a, ml, and mm parameters from eDOSMass.
+  *    Typically, this leads to anisotropy.
+        formula = 0 ,   2       # [1]
+  * Formula(hole) 2 parameters:
+        ml      = 0.074 # [1]
+        mh      = 0.62  # [1]
+        me      = 0.0000e+00    # [1]
+  * Lifting of degeneracy of bulk valleys. The value for
+  * electrons is added to the band edge for the subband
+  * ladder of lower degeneracy if positive, and subtracted
+  * from the band edge for the ladder of higher degeneracy
+  * if negative. (that is, the value of the band edge is
+  * always increased).  For holes, the value is subtracted from
+  * the band edge for the heavy hole band is positive,
+  * add added tp that of the light hole band if
+  * negative.  The signs are such that the shift always
+  * moves the band edges 'outward', away from midgap.  The
+  * gap itself is defined as the separation of the
+  * unshifted band edges and remains unaffected.
+        offset  = 0.0000e+00 ,  0.0000e+00      # [eV]
+  * Alternative to the specification of formula, offset,
+  * and masses, you can make an arbitrary number of ladder
+  * specification, 'eLadder(mz, mxy, deg, dE) and hLadder(...)
+  * Here, mz is the quantization mass, mxy an in-plane DOS mass,
+  * deg the ladder degeneracy, and dE an shift of the band edge
+  * for the ladder (non-negative; the shift is always outward,
+  * away from midgap).  When present, we solve the Schroedinger
+  * equation separately for each ladder
+
+  * Temperatures in rescaling of the mxy for eLadder and hLadder
+        ShiftTemperature        = 1.0000e+10 ,  1.0000e+10      # [K]
+}
+
+
+}
+
+
+
+**********************************************
+
+Material = "MEO_2PACz"{
+
+
+ConstantMobility:
+{ 
+* mu_const = mumax (T/T0)^(-Exponent)
+	mumax	= 5e-6 ,	5e-2	# [cm^2/(Vs)]
+	Exponent	= 1.5 ,	1.5	# [1]
+
+}
+
+eDOSMass
+{
+Formula = 2
+* me/m0 = (Nc300/2.540e19)^2/3
+* Nc(T) = Nc300 * (T/300)^3/2
+   Nc300 = 1e+18 # [cm-3] * originally 4.1835e+17
+
+}
+
+hDOSMass
+{
+Formula = 2
+* mh/m0 = (Nv300/2.540e19)^2/3
+* Nv(T) = Nv300 * (T/300)^3/2
+    Nv300 = 1e+18  # [cm-3]
+
+} 
+
+
+Epsilon{
+  epsilon = 12
+}
+
+RadiativeRecombination {
+  C = +9.0000000e-12
+}
+
+Auger * coefficients:
+{ * R_Auger = ( C_n n + C_p p ) ( n p - ni_eff^2)
+  * with C_n,p = (A + B (T/T0) + C (T/T0)^2) (1 + H exp(-{n,p}/N0))
+	A	= 4.4e-29 ,	4.4e-29	# [cm^6/s]
+	B	= 0 ,	0	# [cm^6/s]
+	C	= 0 ,	0	# [cm^6/s]
+	H	= 0 ,	0	# [1]
+	N0	= 1.0000e+18 ,	1.0000e+18	# [cm^(-3)]
+}
+
+SurfaceRecombination * surface SRH recombination:
+{ * s = S0 ( 1 + Sref ( N/Nref )^gamma ) recombination velocity
+	S0	= 3.0000e+04 ,	3.0000e+04	# [cm/s]
+	Sref	= 0	# [1 Nref	= 1.0000e+16	# [cm^(-3)]
+	gamma	= 1	# [1]
+	Etrap	= 0.0000e+00	# [eV]
+}
+
+Bandgap
+{ * Eg = Eg0 + dEg0 + alpha Tpar^2 / (beta + Tpar) - alpha T^2 / (beta + T)
+  * dEg0(<bgn_model_name>) is a band gap correction term.  It is used together with 
+  * an appropriate BGN model, if this BGN model is chosen in Physics section 
+  * Parameter 'Tpar' specifies the value of lattice 
+  * temperature, at which parameters below are defined
+  * Chi0 is electron affinity.
+	Chi0	= 1.5 # [eV], [58BRA] 
+	Bgn2Chi	= 0.5	# [1] 
+	Eg0	= 3.8	# [eV], [58BRA] - 1.16964 at 0 degC
+	dEg0(Bennett)	= 0.0000e+00	# [eV] 
+	dEg0(Slotboom)	= 0.0000e+00	# [eV] 
+	dEg0(OldSlotboom)	= 0.0000e+00	# [eV] 
+	dEg0(delAlamo)	= 0.0000e+00	# [eV] 
+	alpha	= 0.0000e+00	# [eV K^-1] 
+	beta	= 0.0000e+00	# [K] 
+	Tpar	= 300	# [K] 
+}
+
+
+Kappa
+{ *  Lattice thermal conductivity
+  Formula = 1
+	* parameter kappa:
+	Xmax(0)		= 0.0		# [1]
+	Xmax(1)		= 0.1		# [1]
+	Xmax(2)		= 0.5		# [1]
+	Xmax(3)		= 0.85		# [1]
+	Xmax(4)		= 1.0		# [1]
+	kappa(0)	=  0.55		# [W/(K cm)]
+	kappa(1)	=  0.21		# [W/(K cm)]
+	kappa(2)	=  0.09		# [W/(K cm)]
+	kappa(3)	=  0.14		# [W/(K cm)]
+	kappa(4)	=  0.91		# [W/(K cm)]
+	B(kappa(1))	= 0.0
+	B(kappa(2))	= 0.0
+	B(kappa(3))	= 0.0
+	B(kappa(4))	= 0.0
+	C(kappa(1))	= 0.0
+	C(kappa(2))	= 0.0
+	C(kappa(3))	= 0.0
+	C(kappa(4))	= 0.0
+	* parameter kappa_b:
+	kappa_b(0)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(1)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(2)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(3)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(4)	= 0.0		# [W/(K^2 cm)]
+	* parameter kappa_c:
+	kappa_c(0)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(1)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(2)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(3)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(4)	= 0.0		# [W/(K^2 cm)]
+}
+
+
+ComplexRefractiveIndex {
+  Formula = 2
+  NumericalTable = "/jumbo/scheidelerlab/Vann/CRIs/meo_2pacz_complex_refractive_index.txt"
+    
+}
+
+Scharfetter * relation and trap level for SRH recombination:
+{ * tau = taumin + ( taumax - taumin ) / ( 1 + ( N/Nref )^gamma)
+  * tau(T) = tau * ( (T/300)^Talpha )          (TempDep)
+  * tau(T) = tau * exp( Tcoeff * ((T/300)-1) ) (ExpTempDep)
+	taumin	= 1e-6 ,	1e-6	# [s]
+	taumax	= 1e-6 , 	1e-6  # [s]
+	Nref	= 1.0000e+16 ,	1.0000e+16	# [cm^(-3)]
+	gamma	= 1 ,	1	# [1]
+	Talpha	= 0.0000e+00 ,	0.0000e+00	# [1]
+	Tcoeff	= 0.0000e+00 ,	0.0000e+00	# [1]
+	Etrap	= 0.0000e+00	# [eV]
+}
+
+SchroedingerParameters:
+{ 
+  * For the hole masses for Schroedinger equation you can
+  * use different formulas.
+  * formula=1 (for materials with Si-like hole band structure)
+  *   m(k)/m0=1/(A+-sqrt(B+C*((xy)^2+(yz)^2+(zx)^2)))
+  *   where k=(x,y,z) is unit normal vector in reziprocal
+  *   space.  '+' for light hole band, '-' for heavy hole band
+  * formula=2: Heavy hole mass mh and light hole mass ml are
+  *   specified explicitly.
+  * formula=3: A is the relative effective mass.  This
+  *   formula must only be used for metal and will used in
+  *   tunnelling current computation only.
+  * formula<0 means no default model and no default parameters
+  *   are available, so you have to provide values for
+  *   'formula' and the respective parameters in order to use
+  *   this parameter set.
+        formula = 2      # [1]
+  * Formula 2 parameters:
+	ml(0)	= 0.082	# [1]
+	ml(1)	= 0.150	# [1]
+	mh(0)	= 0.51	# [1]
+	mh(1)	= 0.76	# [1]
+}
+
+
+}
+
+************************************
+
+Material = "PEDOT"{
+
+
+Epsilon{
+  epsilon = 3
+}
+
+Bandgap
+{ * Eg = Eg0 + dEg0 + alpha Tpar^2 / (beta + Tpar) - alpha T^2 / (beta + T)
+  * dEg0(<bgn_model_name>) is a band gap correction term.  It is used together with 
+  * an appropriate BGN model, if this BGN model is chosen in Physics section 
+  * Parameter 'Tpar' specifies the value of lattice 
+  * temperature, at which parameters below are defined
+  * Chi0 is electron affinity.
+	Chi0	= 3.5 # [eV], [58BRA] 
+	Bgn2Chi	= 0.5	# [1] 
+	Eg0	= 1.6	# [eV], [58BRA] - 1.16964 at 0 degC
+	dEg0(Bennett)	= 0.0000e+00	# [eV] 
+	dEg0(Slotboom)	= 0.0000e+00	# [eV] 
+	dEg0(OldSlotboom)	= 0.0000e+00	# [eV] 
+	dEg0(delAlamo)	= 0.0000e+00	# [eV] 
+	alpha	= 0.0000e+00	# [eV K^-1] 
+	beta	= 0.0000e+00	# [K] 
+	Tpar	= 300	# [K] 
+}
+
+
+eDOSMass
+{
+Formula = 2
+* me/m0 = (Nc300/2.540e19)^2/3
+* Nc(T) = Nc300 * (T/300)^3/2
+   Nc300 = 1e+18 # [cm-3]
+
+}
+
+hDOSMass
+{
+Formula = 2
+* mh/m0 = (Nv300/2.540e19)^2/3
+* Nv(T) = Nv300 * (T/300)^3/2
+    Nv300 = 1e+18  # [cm-3]
+
+} 
+
+ConstantMobility:
+{ 
+* mu_const = mumax (T/T0)^(-Exponent)
+	mumax	= 6.1e-7 ,	6.2e-3	# [cm^2/(Vs)]
+	Exponent	= 1.5 ,	1.5	# [1]
+
+}
+
+ComplexRefractiveIndex {
+  Formula = 2
+  NumericalTable = "/jumbo/scheidelerlab/Vann/CRIs/pedot_complex_refractive_index.txt"
+    
+}
+
+Kappa
+{ *  Lattice thermal conductivity
+  Formula = 1
+	* parameter kappa:
+	Xmax(0)		= 0.0		# [1]
+	Xmax(1)		= 0.1		# [1]
+	Xmax(2)		= 0.5		# [1]
+	Xmax(3)		= 0.85		# [1]
+	Xmax(4)		= 1.0		# [1]
+	kappa(0)	=  0.55		# [W/(K cm)]
+	kappa(1)	=  0.21		# [W/(K cm)]
+	kappa(2)	=  0.09		# [W/(K cm)]
+	kappa(3)	=  0.14		# [W/(K cm)]
+	kappa(4)	=  0.91		# [W/(K cm)]
+	B(kappa(1))	= 0.0
+	B(kappa(2))	= 0.0
+	B(kappa(3))	= 0.0
+	B(kappa(4))	= 0.0
+	C(kappa(1))	= 0.0
+	C(kappa(2))	= 0.0
+	C(kappa(3))	= 0.0
+	C(kappa(4))	= 0.0
+	* parameter kappa_b:
+	kappa_b(0)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(1)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(2)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(3)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(4)	= 0.0		# [W/(K^2 cm)]
+	* parameter kappa_c:
+	kappa_c(0)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(1)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(2)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(3)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(4)	= 0.0		# [W/(K^2 cm)]
+}
+
+
+Scharfetter * relation and trap level for SRH recombination:
+{ * tau = taumin + ( taumax - taumin ) / ( 1 + ( N/Nref )^gamma)
+  * tau(T) = tau * ( (T/300)^Talpha )          (TempDep)
+  * tau(T) = tau * exp( Tcoeff * ((T/300)-1) ) (ExpTempDep)
+	taumin	= 1e-6 ,	1e-6	# [s]
+	taumax	= 1e-6 , 	1e-6  # [s]
+	Nref	= 1.0000e+16 ,	1.0000e+16	# [cm^(-3)]
+	gamma	= 1 ,	1	# [1]
+	Talpha	= 0.0000e+00 ,	0.0000e+00	# [1]
+	Tcoeff	= 0.0000e+00 ,	0.0000e+00	# [1]
+	Etrap	= 0.0000e+00	# [eV]
+}
+
+SchroedingerParameters:
+{ 
+  * For the hole masses for Schroedinger equation you can
+  * use different formulas.
+  * formula=1 (for materials with Si-like hole band structure)
+  *   m(k)/m0=1/(A+-sqrt(B+C*((xy)^2+(yz)^2+(zx)^2)))
+  *   where k=(x,y,z) is unit normal vector in reziprocal
+  *   space.  '+' for light hole band, '-' for heavy hole band
+  * formula=2: Heavy hole mass mh and light hole mass ml are
+  *   specified explicitly.
+  * formula=3: A is the relative effective mass.  This
+  *   formula must only be used for metal and will used in
+  *   tunnelling current computation only.
+  * formula<0 means no default model and no default parameters
+  *   are available, so you have to provide values for
+  *   'formula' and the respective parameters in order to use
+  *   this parameter set.
+        formula = 2      # [1]
+  * Formula 2 parameters:
+	ml(0)	= 0.082	# [1]
+	ml(1)	= 0.150	# [1]
+	mh(0)	= 0.51	# [1]
+	mh(1)	= 0.76	# [1]
+}
+
+}
+
+
+**********************************************
+
+Material = "Nanowires_v2"{
+
+ConstantMobility:
+{ 
+* mu_const = mumax (T/T0)^(-Exponent)
+	mumax	= 200 ,	200	# [cm^2/(Vs)]
+	Exponent	= 1.5 ,	1.5	# [1]
+
+}
+
+eDOSMass
+{
+Formula = 2
+* me/m0 = (Nc300/2.540e19)^2/3
+* Nc(T) = Nc300 * (T/300)^3/2
+   Nc300 = 1e18  # [cm-3]
+
+}
+
+hDOSMass
+{
+Formula = 2
+* mh/m0 = (Nv300/2.540e19)^2/3
+* Nv(T) = Nv300 * (T/300)^3/2
+    Nv300 = 1e18  # [cm-3]
+
+} 
+
+
+Epsilon{
+  epsilon = 15
+}
+
+
+
+Auger * coefficients:
+{ * R_Auger = ( C_n n + C_p p ) ( n p - ni_eff^2)
+  * with C_n,p = (A + B (T/T0) + C (T/T0)^2) (1 + H exp(-{n,p}/N0))
+	A	= 4.4e-29 ,	4.4e-29	# [cm^6/s]
+	B	= 0 ,	0	# [cm^6/s]
+	C	= 0 ,	0	# [cm^6/s]
+	H	= 0 ,	0	# [1]
+	N0	= 1.0000e+18 ,	1.0000e+18	# [cm^(-3)]
+}
+
+SurfaceRecombination * surface SRH recombination:
+{ * s = S0 ( 1 + Sref ( N/Nref )^gamma ) recombination velocity
+	S0	= 1.0000e+0 ,	1.0000e+0	# [cm/s]
+	Sref	= 0	# [1 Nref	= 1.0000e+16	# [cm^(-3)]
+	gamma	= 1	# [1]
+	Etrap	= 0.0000e+00	# [eV]
+}
+
+Bandgap
+{ * Eg = Eg0 + dEg0 + alpha Tpar^2 / (beta + Tpar) - alpha T^2 / (beta + T)
+  * dEg0(<bgn_model_name>) is a band gap correction term.  It is used together with 
+  * an appropriate BGN model, if this BGN model is chosen in Physics section 
+  * Parameter 'Tpar' specifies the value of lattice 
+  * temperature, at which parameters below are defined
+  * Chi0 is electron affinity.
+	Chi0	= 3.7 # [eV], [58BRA] 
+	Bgn2Chi	= 0.5	# [1] 
+	Eg0	= 2	# [eV], [58BRA] - 1.16964 at 0 degC
+	dEg0(Bennett)	= 0.0000e+00	# [eV] 
+	dEg0(Slotboom)	= 0.0000e+00	# [eV] 
+	dEg0(OldSlotboom)	= 0.0000e+00	# [eV] 
+	dEg0(delAlamo)	= 0.0000e+00	# [eV] 
+	alpha	= 0.0000e+00	# [eV K^-1] 
+	beta	= 0.0000e+00	# [K] 
+	Tpar	= 300	# [K] 
+}
+
+
+Kappa
+{ *  Lattice thermal conductivity
+  Formula = 1
+	* parameter kappa:
+	Xmax(0)		= 0.0		# [1]
+	Xmax(1)		= 0.1		# [1]
+	Xmax(2)		= 0.5		# [1]
+	Xmax(3)		= 0.85		# [1]
+	Xmax(4)		= 1.0		# [1]
+	kappa(0)	=  0.55		# [W/(K cm)]
+	kappa(1)	=  0.21		# [W/(K cm)]
+	kappa(2)	=  0.09		# [W/(K cm)]
+	kappa(3)	=  0.14		# [W/(K cm)]
+	kappa(4)	=  0.91		# [W/(K cm)]
+	B(kappa(1))	= 0.0
+	B(kappa(2))	= 0.0
+	B(kappa(3))	= 0.0
+	B(kappa(4))	= 0.0
+	C(kappa(1))	= 0.0
+	C(kappa(2))	= 0.0
+	C(kappa(3))	= 0.0
+	C(kappa(4))	= 0.0
+	* parameter kappa_b:
+	kappa_b(0)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(1)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(2)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(3)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(4)	= 0.0		# [W/(K^2 cm)]
+	* parameter kappa_c:
+	kappa_c(0)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(1)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(2)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(3)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(4)	= 0.0		# [W/(K^2 cm)]
+}
+
+
+ComplexRefractiveIndex {
+  Formula = 2
+  NumericalTable = "/jumbo/scheidelerlab/Vann/CRIs/nanowires_complex_refractive_index.txt"
+    
+}
+
+Scharfetter * relation and trap level for SRH recombination:
+{ * tau = taumin + ( taumax - taumin ) / ( 1 + ( N/Nref )^gamma)
+  * tau(T) = tau * ( (T/300)^Talpha )          (TempDep)
+  * tau(T) = tau * exp( Tcoeff * ((T/300)-1) ) (ExpTempDep)
+	taumin	= 1e-3 ,	1e-6	# [s]
+	taumax	= 1e-3 , 	1e-6  # [s]
+	Nref	= 1.0000e+19 ,	1.0000e+19	# [cm^(-3)]
+	gamma	= 1 ,	1	# [1]
+	Talpha	= 0.0000e+00 ,	0.0000e+00	# [1]
+	Tcoeff	= 0.0000e+00 ,	0.0000e+00	# [1]
+	Etrap	= 0.0000e+00	# [eV]
+}
+
+SchroedingerParameters:
+{ 
+  * For the hole masses for Schroedinger equation you can
+  * use different formulas.
+  * formula=1 (for materials with Si-like hole band structure)
+  *   m(k)/m0=1/(A+-sqrt(B+C*((xy)^2+(yz)^2+(zx)^2)))
+  *   where k=(x,y,z) is unit normal vector in reziprocal
+  *   space.  '+' for light hole band, '-' for heavy hole band
+  * formula=2: Heavy hole mass mh and light hole mass ml are
+  *   specified explicitly.
+  * formula=3: A is the relative effective mass.  This
+  *   formula must only be used for metal and will used in
+  *   tunnelling current computation only.
+  * formula<0 means no default model and no default parameters
+  *   are available, so you have to provide values for
+  *   'formula' and the respective parameters in order to use
+  *   this parameter set.
+        formula = 2      # [1]
+  * Formula 2 parameters:
+	ml(0)	= 0.082	# [1]
+	ml(1)	= 0.150	# [1]
+	mh(0)	= 0.51	# [1]
+	mh(1)	= 0.76	# [1]
+}
+
+Band2BandTunneling
+{ * See Dessis manual `Band-To-Band Tunneling'
+   A       = 8.9770e+20    # [cm / (s V^2)]
+   B       = 2.1466e+07    # [eV^(-3/2) V/cm]
+   hbarOmega       = 0.0186        # [eV]
+ * Traditional models for the following keywords in input file:
+ * Band2Band(E1)  : A1*E*exp(-B1/E)
+ * Band2Band(E1_5): A1_5*E^1.5*exp(-B1_5/E)
+ * Band2Band(E2)  : A2*E^2*exp(-B2/E)
+ A1      = 1.1000e+27    # [1/cm/sec/V]
+ B1      = 2.1300e+07    # [V/cm]
+ A1_5    = 1.9000e+24    # [1/cm/sec/V^1.5]
+ B1_5    = 2.1900e+07    # [V/cm]
+ A2      = 3.5000e+21    # [1/cm/sec/V^2]
+ B2      = 2.2500e+07    # [V/cm]
+* Hurkx model for the following keywords in input file:
+* Band2Band(Hurkx)  : -Agen*D*(E/E0)^Pgen*exp(-Bgen*(Eg/Eg300)^1.5/E) if D < 0
+*                     -Arec*D*(E/E0)^Prec*exp(-Brec*(Eg/Eg300)^1.5/E) if D > 0
+*                     D = (n*p-ni^2)/(n+ni)/(p+ni)*(1-|alpha|)+alpha, E0 = 1 V/cm
+*                     So, if alpha = 0, it's original Hurkx model,
+*                         if alpha = -1, it's only generation,
+*                         if alpha = +1, it's only recombination.
+ Agen    = 3.5000e+21    # [1/cm^3/sec]
+ Bgen    = 2.2500e+07    # [V/cm]
+ Pgen    = 2     # [1]
+ Arec    = 3.5000e+21    # [1/cm^3/sec]
+ Brec    = 2.2500e+07    # [V/cm]
+ Prec    = 2     # [1]
+ alpha   = 0.0000e+00    # [1]
+* min length to interfaces (for traditional & Hurkx models):
+   dDist   = 0.0000e+00    # [cm]
+* min potential difference on length dPot/E (for traditional & Hurkx models):
+  dPot    = 0.0000e+00    # [V]
+  * See Sentaurus Device manual `Band-To-Band Tunneling' 
+  * nonlocal B2B models for the following keywords in command file:
+  * Band2Band(Model=NonlocalPath1) : Nonlocal B2B tunneling with single transition process   using the first tunneling path
+  * Band2Band(Model=NonlocalPath2) : Nonlocal B2B tunneling with two    transition processes using the first and second tunneling paths
+  * Band2Band(Model=NonlocalPath3) : Nonlocal B2B tunneling with three  transition processes using the all three tunneling paths
+  * For the i-th nonlocal B2B process (i=1, 2, or 3):
+  * Apathi : Prefactor Ad or Ap in the uniform field limit for the direct or indirect tunneling
+  * Bpathi : Exponent  Bd or Bp in the uniform field limit for the direct or indirect tunneling
+  * Dpathi : The conduction band offset D
+  * Ppathi : The phonon energy P
+  *          Note that the indirect tunneling process is assumed if P>0, and the direct tunneling process is assumed if P=0
+  * Rpathi : The ratio mv/mc. If Rpathi=0, it is automatically determined by
+  *          mv/mc = (1 + 2*mr)/(1 - 2*mr)
+  *          where mr=mc*mv/(mc+mv) is the reduced mass
+  * In the uniform field limit, the generation rate can be expressed by
+  * G = A * (F/F0)^2   * Exp(-B/F) for   direct tunneling
+  *   = A * (F/F0)^2.5 * Exp(-B/F) for indirect tunneling
+  * where
+  * Ad = g * mr^0.5 * (qF0)^2 / (36 * pi * h_bar^2 *E_T^0.5)
+  * Ap = g *(mc*mv)^1.5 * (1+2*N) * (qF0)^2.5 * Dop^2 / (2^7.75 * pi^2.5 * h_bar^2.5 * mr^1.25 * E_T^1.75 * rho * P)
+  * Bd = pi    * mr^0.5 * E_T^1.5 / (2 * h_bar * q)
+  * Bp = 2^2.5 * mr^0.5 * E_T^1.5 / (3 * h_bar * q)
+  * F0 = 1 V/cm, qF0 = 1 eV/cm, E_T = E_G + D
+  * From the above expression, the microscopic parameters such as mr, mc, and mv for the nonlocal B2B model are extracted internally
+	Apath1	= 1	# [1/cm^3/sec]
+	Bpath1	= 1	# [V/cm]
+	Dpath1	= 0.0000e+00	# [eV]
+	Ppath1	= 0.0000e+00	# [eV]
+	Rpath1	= 0.0000e+00	# [1]
+	MaxTunnelLength	= 30e-7	# [cm]
+}
+
+}
+
+
+
+
+
+
+************************************
+Material = "SnO2"{
+
+
+ConstantMobility:
+{
+ * mu_const = mumax (T/T0)^(-Exponent)
+	mumax	= 1e-4 ,	1e-6	# [cm^2/(Vs)]
+	Exponent	= 1.5 ,	1.5	# [1]
+}
+
+
+eDOSMass
+{
+Formula = 2
+* me/m0 = (Nc300/2.540e19)^2/3
+* Nc(T) = Nc300 * (T/300)^3/2
+   Nc300 = 2.2e+17  # [cm-3]
+
+}
+
+hDOSMass
+{
+Formula = 2
+* mh/m0 = (Nv300/2.540e19)^2/3
+* Nv(T) = Nv300 * (T/300)^3/2
+    Nv300 = 2.2e+16  # [cm-3]
+
+} 
+
+
+Epsilon{
+  epsilon = 9
+}
+
+
+
+Bandgap
+{ * Eg = Eg0 + dEg0 + alpha Tpar^2 / (beta + Tpar) - alpha T^2 / (beta + T)
+  * dEg0(<bgn_model_name>) is a band gap correction term.  It is used together with 
+  * an appropriate BGN model, if this BGN model is chosen in Physics section 
+  * Parameter 'Tpar' specifies the value of lattice 
+  * temperature, at which parameters below are defined
+  * Chi0 is electron affinity.
+	Chi0	= 4 # [eV], [58BRA] 
+	Bgn2Chi	= 0.5	# [1] 
+	Eg0	= 4	# [eV], [58BRA] - 1.16964 at 0 degC
+	dEg0(Bennett)	= 0.0000e+00	# [eV] 
+	dEg0(Slotboom)	= 0.0000e+00	# [eV] 
+	dEg0(OldSlotboom)	= 0.0000e+00	# [eV] 
+	dEg0(delAlamo)	= 0.0000e+00	# [eV] 
+	alpha	= 0.0000e+00	# [eV K^-1] 
+	beta	= 0.0000e+00	# [K] 
+	Tpar	= 300	# [K] 
+}
+
+Kappa
+{ *  Lattice thermal conductivity
+  Formula = 1
+	* parameter kappa:
+	Xmax(0)		= 0.0		# [1]
+	Xmax(1)		= 0.1		# [1]
+	Xmax(2)		= 0.5		# [1]
+	Xmax(3)		= 0.85		# [1]
+	Xmax(4)		= 1.0		# [1]
+	kappa(0)	=  0.55		# [W/(K cm)]
+	kappa(1)	=  0.21		# [W/(K cm)]
+	kappa(2)	=  0.09		# [W/(K cm)]
+	kappa(3)	=  0.14		# [W/(K cm)]
+	kappa(4)	=  0.91		# [W/(K cm)]
+	B(kappa(1))	= 0.0
+	B(kappa(2))	= 0.0
+	B(kappa(3))	= 0.0
+	B(kappa(4))	= 0.0
+	C(kappa(1))	= 0.0
+	C(kappa(2))	= 0.0
+	C(kappa(3))	= 0.0
+	C(kappa(4))	= 0.0
+	* parameter kappa_b:
+	kappa_b(0)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(1)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(2)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(3)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(4)	= 0.0		# [W/(K^2 cm)]
+	* parameter kappa_c:
+	kappa_c(0)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(1)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(2)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(3)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(4)	= 0.0		# [W/(K^2 cm)]
+}
+
+
+ComplexRefractiveIndex {
+  Formula = 2
+  NumericalTable = "/jumbo/scheidelerlab/Vann/CRIs/SnO2_complex_refractive_index.txt"
+    
+}
+
+Scharfetter * relation and trap level for SRH recombination:
+{ * tau = taumin + ( taumax - taumin ) / ( 1 + ( N/Nref )^gamma)
+  * tau(T) = tau * ( (T/300)^Talpha )          (TempDep)
+  * tau(T) = tau * exp( Tcoeff * ((T/300)-1) ) (ExpTempDep)
+	taumin	= 1e-6 ,	1e-6	# [s]
+	taumax	= 1e-6 , 	1e-6  # [s]
+	Nref	= 1.0000e+16 ,	1.0000e+16	# [cm^(-3)]
+	gamma	= 1 ,	1	# [1]
+	Talpha	= 0.0000e+00 ,	0.0000e+00	# [1]
+	Tcoeff	= 0.0000e+00 ,	0.0000e+00	# [1]
+	Etrap	= 0.0000e+00	# [eV]
+}
+
+SchroedingerParameters:
+{ 
+  * For the hole masses for Schroedinger equation you can
+  * use different formulas.
+  * formula=1 (for materials with Si-like hole band structure)
+  *   m(k)/m0=1/(A+-sqrt(B+C*((xy)^2+(yz)^2+(zx)^2)))
+  *   where k=(x,y,z) is unit normal vector in reziprocal
+  *   space.  '+' for light hole band, '-' for heavy hole band
+  * formula=2: Heavy hole mass mh and light hole mass ml are
+  *   specified explicitly.
+  * formula=3: A is the relative effective mass.  This
+  *   formula must only be used for metal and will used in
+  *   tunnelling current computation only.
+  * formula<0 means no default model and no default parameters
+  *   are available, so you have to provide values for
+  *   'formula' and the respective parameters in order to use
+  *   this parameter set.
+        formula = 2      # [1]
+  * Formula 2 parameters:
+	ml(0)	= 0.082	# [1]
+	ml(1)	= 0.150	# [1]
+	mh(0)	= 0.51	# [1]
+	mh(1)	= 0.76	# [1]
+}
+}
+
+***********************************
+
+Material = "PTAA"{
+
+
+ConstantMobility:
+{ 
+* mu_const = mumax (T/T0)^(-Exponent)
+	mumax	= 1e-6 , 1e-4	# [cm^2/(Vs)]
+	Exponent	= 1.5 ,	1.5	# [1]
+
+}
+
+eDOSMass
+{
+Formula = 2
+* me/m0 = (Nc300/2.540e19)^2/3
+* Nc(T) = Nc300 * (T/300)^3/2
+   Nc300 = 2.88e+21  # [cm-3]
+
+}
+
+hDOSMass
+{
+Formula = 2
+* mh/m0 = (Nv300/2.540e19)^2/3
+* Nv(T) = Nv300 * (T/300)^3/2
+    Nv300 = 2.88e+21  # [cm-3]
+
+} 
+
+
+Epsilon{
+  epsilon = 3
+}
+
+
+Bandgap
+{ * Eg = Eg0 + dEg0 + alpha Tpar^2 / (beta + Tpar) - alpha T^2 / (beta + T)
+  * dEg0(<bgn_model_name>) is a band gap correction term.  It is used together with 
+  * an appropriate BGN model, if this BGN model is chosen in Physics section 
+  * Parameter 'Tpar' specifies the value of lattice 
+  * temperature, at which parameters below are defined
+  * Chi0 is electron affinity.
+	Chi0	= 1.7 # [eV], [58BRA] 
+	Bgn2Chi	= 0.5	# [1] 
+	Eg0	= 3.57 # [eV], [58BRA] - 1.16964 at 0 degC
+	dEg0(Bennett)	= 0.0000e+00	# [eV] 
+	dEg0(Slotboom)	= 0.0000e+00	# [eV] 
+	dEg0(OldSlotboom)	= 0.0000e+00	# [eV] 
+	dEg0(delAlamo)	= 0.0000e+00	# [eV] 
+	alpha	= 0.0000e+00	# [eV K^-1] 
+	beta	= 0.0000e+00	# [K] 
+	Tpar	= 300	# [K] 
+}
+
+
+Kappa
+{ *  Lattice thermal conductivity
+  Formula = 1
+	* parameter kappa:
+	Xmax(0)		= 0.0		# [1]
+	Xmax(1)		= 0.1		# [1]
+	Xmax(2)		= 0.5		# [1]
+	Xmax(3)		= 0.85		# [1]
+	Xmax(4)		= 1.0		# [1]
+	kappa(0)	=  0.55		# [W/(K cm)]
+	kappa(1)	=  0.21		# [W/(K cm)]
+	kappa(2)	=  0.09		# [W/(K cm)]
+	kappa(3)	=  0.14		# [W/(K cm)]
+	kappa(4)	=  0.91		# [W/(K cm)]
+	B(kappa(1))	= 0.0
+	B(kappa(2))	= 0.0
+	B(kappa(3))	= 0.0
+	B(kappa(4))	= 0.0
+	C(kappa(1))	= 0.0
+	C(kappa(2))	= 0.0
+	C(kappa(3))	= 0.0
+	C(kappa(4))	= 0.0
+	* parameter kappa_b:
+	kappa_b(0)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(1)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(2)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(3)	= 0.0		# [W/(K^2 cm)]
+	kappa_b(4)	= 0.0		# [W/(K^2 cm)]
+	* parameter kappa_c:
+	kappa_c(0)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(1)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(2)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(3)	= 0.0		# [W/(K^2 cm)]
+	kappa_c(4)	= 0.0		# [W/(K^2 cm)]
+}
+
+
+ComplexRefractiveIndex {
+  Formula = 2
+  NumericalTable = "/jumbo/scheidelerlab/Vann/CRIs/PTAA_complex_refractive_index.txt"
+    
+}
+
+Scharfetter * relation and trap level for SRH recombination:
+{ * tau = taumin + ( taumax - taumin ) / ( 1 + ( N/Nref )^gamma)
+  * tau(T) = tau * ( (T/300)^Talpha )          (TempDep)
+  * tau(T) = tau * exp( Tcoeff * ((T/300)-1) ) (ExpTempDep)
+	taumin	= 1e-6 ,	1e-6	# [s]
+	taumax	= 1e-6 , 	1e-6  # [s]
+	Nref	= 1.0000e+16 ,	1.0000e+16	# [cm^(-3)]
+	gamma	= 1 ,	1	# [1]
+	Talpha	= 0.0000e+00 ,	0.0000e+00	# [1]
+	Tcoeff	= 0.0000e+00 ,	0.0000e+00	# [1]
+	Etrap	= 0.0000e+00	# [eV]
+}
+
+SchroedingerParameters:
+{ 
+  * For the hole masses for Schroedinger equation you can
+  * use different formulas.
+  * formula=1 (for materials with Si-like hole band structure)
+  *   m(k)/m0=1/(A+-sqrt(B+C*((xy)^2+(yz)^2+(zx)^2)))
+  *   where k=(x,y,z) is unit normal vector in reziprocal
+  *   space.  '+' for light hole band, '-' for heavy hole band
+  * formula=2: Heavy hole mass mh and light hole mass ml are
+  *   specified explicitly.
+  * formula=3: A is the relative effective mass.  This
+  *   formula must only be used for metal and will used in
+  *   tunnelling current computation only.
+  * formula<0 means no default model and no default parameters
+  *   are available, so you have to provide values for
+  *   'formula' and the respective parameters in order to use
+  *   this parameter set.
+        formula = 2      # [1]
+  * Formula 2 parameters:
+	ml(0)	= 0.082	# [1]
+	ml(1)	= 0.150	# [1]
+	mh(0)	= 0.51	# [1]
+	mh(1)	= 0.76	# [1]
+}
+
+}
+
+
+
+
+
+
+
+
